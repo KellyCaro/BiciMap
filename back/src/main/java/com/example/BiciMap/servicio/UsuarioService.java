@@ -20,7 +20,7 @@ public class UsuarioService implements IUsuarioServicio {
 
     @Override
     public List<Usuarios> listar() {
-        return (List<Usuarios>) data.findAll();
+        return (List<Usuarios>) usuarioRepository.findAll();
     }
 
     @Override
@@ -29,8 +29,8 @@ public class UsuarioService implements IUsuarioServicio {
     }
 
     @Override
-    public int save(Usuarios p) {
-        return 0;
+    public Usuarios save(Usuarios p) {
+        return p;
     }
 
     @Override
