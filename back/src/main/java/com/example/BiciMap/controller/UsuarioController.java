@@ -1,10 +1,12 @@
 package com.example.BiciMap.controller;
 
 
+
 import com.example.BiciMap.modelo.Usuario;
 import com.example.BiciMap.modelo.UsuarioCredenciales;
-import com.example.BiciMap.modelo.Usuarios;
+import com.example.BiciMap.modelo.Usuario;
 import com.example.BiciMap.servicio.UsuarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -70,7 +73,7 @@ public class UsuarioController {
 
     @GetMapping("/registro")
     public String mostrarFormularioRegistro(Model model) {
-        Usuarios usuario = new Usuarios();
+        Usuario usuario = new Usuario();
         model.addAttribute("usuario", usuario);
         return "registro_usuario"; // Asumiendo que tienes una vista llamada "registro_usuario"
     }
@@ -128,3 +131,4 @@ public class UsuarioController {
     }
 
 }
+
