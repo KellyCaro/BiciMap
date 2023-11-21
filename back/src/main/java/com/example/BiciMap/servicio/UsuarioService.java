@@ -1,7 +1,8 @@
 package com.example.BiciMap.servicio;
 
+
 import com.example.BiciMap.modelo.Usuario;
-import com.example.BiciMap.modelo.Usuarios;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,3 +46,4 @@ public class UsuarioService {
     }
 
 }
+
