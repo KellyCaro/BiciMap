@@ -116,9 +116,10 @@
     </div>
 </div>
 <!-- Texto resaltado en negrilla y botones verdes en la parte inferior derecha -->
+
 <div class="container text-right mt-3 ">
-            <button class="btn custom-button">Ver Mapa</button>
-            <button class="btn btn-success" id="iniciarRecorrido">Iniciar Recorrido</button>
+    <a th:href="@{/rutas/mostrarRutas}" class="btn custom-button">Ver rutas ejecutadas</a>
+            <button class="btn custom-button" id="iniciarRecorrido" onclick="agregarRutaCola()">Ver Mapa</button>
 </div>
 <div class="container text-right mt-3 ">
     <button id="puntosReparacionButton" class="btn custom-button">Puntos de Reparación</button>
@@ -141,7 +142,32 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 
+    function agregarRutaCola() {
+        // Obtener los valores de inicio y fin de la ruta desde los inputs en el HTML
+        const iniDireccion = document.getElementById('etiqueta1').value;
+        const finDireccion = document.getElementById('etiqueta2').value;
 
+        // Realizar una solicitud HTTP POST para agregar la ruta a la cola
+        fetch('/rutas/agregar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: `iniDireccion=${encodeURIComponent(iniDireccion)}&finDireccion=${encodeURIComponent(finDireccion)}`
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al agregar la ruta a la cola');
+                }
+                // Aquí podrías realizar alguna acción adicional si es necesario
+                console.log('Ruta agregada a la cola exitosamente');
+                // Llamar a una función o realizar alguna acción adicional después de agregar la ruta
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Manejar el error en caso de que falle la solicitud
+            });
+    }
 
     let tramoSeleccionado;
     // Puedes cargar dinámicamente los tramos desde tu servidor
@@ -193,6 +219,7 @@
                     }
                 })
                 .catch(error => console.error('Error al obtener las coordenadas del tramo:', error));
+
         });
         });
 

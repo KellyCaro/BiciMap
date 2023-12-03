@@ -10,6 +10,9 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class QueueActual2 {
     NodoActual2 head, rear;
@@ -44,9 +47,10 @@ public class QueueActual2 {
                     Double.parseDouble(lat2), Double.parseDouble(lon2));
             NodoActual2 nuevo = new NodoActual2(address1,address2,lat1,lon1,lat2,lon2,distance);
             if (Empty()){
-                head =nuevo;
-            }else{
+                head = rear = nuevo; // Aquí actualizas tanto head como rear al nuevo nodo
+            } else {
                 rear.next = nuevo;
+                rear = nuevo; // Aquí actualizas solo rear al nuevo nodo
             }
 
             System.out.println("La distancia entre las dos direcciones es " + distance + " kilómetros.");
@@ -114,26 +118,32 @@ public class QueueActual2 {
     public Object Size() {
         return size;
     }
-    public void mostrarRutas() {
+    public List<String> mostrarRutas() {
         NodoActual2 current = head;
+        List<String> rutas = new ArrayList<>();
 
-        if (current == null) {
-            System.out.println("No hay rutas en la cola.");
-            return;
-        }
-
-        System.out.println("Rutas en la cola:");
         int numeroRuta = 1;
 
         while (current != null) {
-            System.out.println("Ruta " + numeroRuta + ":");
-            System.out.println("Inicio: " + current.iniDireccion);
-            System.out.println("Fin: " + current.finDireccion);
-            System.out.println("Longitud de la Ruta: " + (double) Math.round(current.km * 100d) / 100 + " km");
-            System.out.println();
+            if (current.iniDireccion != null && current.finDireccion != null) {
+                String ruta = "Ruta " + numeroRuta + ": " + "Inicio: " + current.iniDireccion + " Fin: " + current.finDireccion ;
+                rutas.add(ruta); // Agregar la cadena de la ruta a la lista
+                System.out.println(ruta); // Mostrar la ruta en la consola
+            } else {
+                System.out.println("Alguna de las direcciones en la ruta " + numeroRuta + " es nula.");
+            }
 
             current = current.next;
             numeroRuta++;
         }
+
+        if (rutas.isEmpty()) {
+            System.out.println("No hay rutas en la cola.");
+        }
+
+        return rutas; // Retornar la lista de rutas
     }
+
+
 }
+
